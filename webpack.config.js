@@ -10,11 +10,45 @@ if (process.env.NODE_ENV?.trim() === 'production') {
 module.exports = {
   mode: mode,
 
+  output: {
+    assetModuleFilename: 'images/[hash][ext][query]',
+  },
+
   module: {
     rules: [
       {
+        test: /\.(png|jpe?g|gif)$/i,
+        type: 'asset', // 'asset/resource' 'asset/inline'
+        // parser: {
+        //   dataUrlCondition: {
+        //     maxSize: 30 * 1024, // change size of inline imgs
+        //   },
+        // },
+      },
+      {
+        test: /\.svg$/i,
+        type: 'asset',
+        resourceQuery: /url/, // *.svg?url https://react-svgr.com/docs/webpack/
+      },
+      {
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        resourceQuery: { not: [/url/] }, // exclude react component if *.svg?url
+        use: ['@svgr/webpack'],
+      },
+
+      {
         test: /\.(s[ac]|c)ss$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: { publicPath: '' },
+            // options: { publicPath: '../' },
+          },
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
       },
       {
         test: /\.jsx?$/,
@@ -26,6 +60,7 @@ module.exports = {
     ],
   },
 
+  // plugins: [new MiniCssExtractPlugin({filename: './css/main.css'})],
   plugins: [new MiniCssExtractPlugin()],
 
   resolve: {
