@@ -1,16 +1,8 @@
-import './styles/index.scss';
+import { createRoot } from 'react-dom/client';
+//https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html#updates-to-client-rendering-apis
+import App from './components/App';
 
-const elvenShieldRecipe = {
-  leatherStripes: 2,
-  ironIngot: 1,
-  refinedMoonstone: 4,
-};
+const container = document.getElementById('app');
+const root = createRoot(container);
 
-const elvenGauntletsRecipe = {
-  ...elvenShieldRecipe,
-  leather: 1,
-  refinedMoonstone: 4,
-};
-
-console.log(elvenShieldRecipe);
-console.log(elvenGauntletsRecipe);
+root.render(<App />);
