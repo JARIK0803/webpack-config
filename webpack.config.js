@@ -5,9 +5,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 let mode = 'development';
+
 const plugins = [
   new CleanWebpackPlugin(),
-  new MiniCssExtractPlugin(),
+  new MiniCssExtractPlugin(), //new MiniCssExtractPlugin({filename: './css/main.css'})
   new HtmlWebpackPlugin({
     template: './src/index.html',
     favicon: './src/favicon/favicon.ico',
@@ -24,12 +25,15 @@ if (process.env.SERVE) {
 }
 
 module.exports = {
+  // mode defaults to 'production' if not set
   mode: mode,
 
   entry: './src/index.js',
 
   output: {
+    // output path is required for `clean-webpack-plugin`
     path: path.resolve(__dirname, 'dist'),
+    // this places all images processed in an image folder
     assetModuleFilename: 'images/[hash][ext][query]',
   },
 
@@ -37,10 +41,23 @@ module.exports = {
     rules: [
       {
         test: /\.(png|jpe?g|gif)$/i,
+        /**
+         * The `type` setting replaces the need for "url-loader"
+         * and "file-loader" in Webpack 5.
+         *
+         * setting `type` to "asset" will automatically pick between
+         * outputing images to a file, or inlining them in the bundle as base64
+         * with a default max inline size of 8kb
+         */
         type: 'asset', // 'asset/resource' 'asset/inline'
+
+        /**
+         * If you want to inline larger images, you can set
+         * a custom `maxSize` for inline like so:
+         */
         // parser: {
         //   dataUrlCondition: {
-        //     maxSize: 30 * 1024, // change size of inline imgs
+        //     maxSize: 30 * 1024,
         //   },
         // },
       },
@@ -55,17 +72,18 @@ module.exports = {
         resourceQuery: { not: [/url/] }, // exclude react component if *.svg?url
         use: ['@svgr/webpack'],
       },
-
       {
         test: /\.(s[ac]|c)ss$/i,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
+            // This is required for asset imports in CSS, such as url()
             options: { publicPath: '' },
-            // options: { publicPath: '../' },
           },
           'css-loader',
           'postcss-loader',
+          // according to the docs, sass-loader should be at the bottom, which
+          // loads it first to avoid prefixes in your sourcemaps and other issues.
           'sass-loader',
         ],
       },
@@ -73,20 +91,29 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
+          // without additional settings, this will reference .babelrc
           loader: 'babel-loader',
+          options: {
+            /**
+             * From the docs: When set, the given directory will be used
+             * to cache the results of the loader. Future webpack builds
+             * will attempt to read from the cache to avoid needing to run
+             * the potentially expensive Babel recompilation process on each run.
+             */
+            cacheDirectory: true,
+          },
         },
       },
     ],
   },
 
-  // plugins: [new MiniCssExtractPlugin({filename: './css/main.css'})],
   plugins: plugins,
+
+  devtool: 'source-map',
 
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-
-  devtool: 'source-map', //'inline-source-map'
 
   devServer: {
     static: {

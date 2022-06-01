@@ -1,2 +1,2 @@
 # webpack-config
-https://www.youtube.com/watch?v=TOb1c39m64A&ab_channel=SwashbucklingwithCode - Thank you Webpack Jesus
+https://www.youtube.com/watch?v=TOb1c39m64A&ab_channel=SwashbucklingwithCode, https://github.com/Jimmydalecleveland/webpack-starters/tree/react-full-project-latest - Thank you Webpack Jesus
