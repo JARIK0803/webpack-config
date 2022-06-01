@@ -1,16 +1,30 @@
 const path = require('path');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 let mode = 'development';
+const plugins = [
+  new CleanWebpackPlugin(),
+  new MiniCssExtractPlugin(),
+  new HtmlWebpackPlugin({
+    template: './src/index.html',
+    favicon: './src/favicon/favicon.ico',
+    // inject: 'body',
+  }),
+];
 
 if (process.env.NODE_ENV?.trim() === 'production') {
   mode = 'production';
+} else {
+  plugins.push(new ReactRefreshWebpackPlugin())
 }
 
 module.exports = {
   mode: mode,
+
+  entry: './src/index.js',
 
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -64,15 +78,7 @@ module.exports = {
   },
 
   // plugins: [new MiniCssExtractPlugin({filename: './css/main.css'})],
-  plugins: [
-    new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin(),
-    new HtmlWebpackPlugin({
-      template: './src/index.html',
-      favicon: './src/favicon/favicon.ico',
-      // inject: 'body',
-    }),
-  ],
+  plugins: plugins,
 
   resolve: {
     extensions: ['.js', '.jsx'],

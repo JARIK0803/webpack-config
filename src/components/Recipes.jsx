@@ -1,3 +1,5 @@
+// @refresh reset
+//this pragma for forcibly refresh with React Fast Refresh  this component
 import { useState } from 'react';
 
 const elvenShieldRecipe = {
@@ -18,7 +20,7 @@ console.log(elvenGauntletsRecipe);
 // import React from 'react'
 
 const Recipes = () => {
-  const [recipe, setRecipe] = useState({}); //[] or {}
+  const [recipe, setRecipe] = useState({});
   return (
     <div>
       <h3>Current Recipe:</h3>
