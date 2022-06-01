@@ -7,7 +7,7 @@ const Whatever = () => {
   return (
     <div>
       <h1>{state}</h1>
-      <button onClick={() => setState('Buttob clicked')}>Click me</button>
+      <button onClick={() => setState('Button clicked')}>Click me</button>
     </div>
   );
 };

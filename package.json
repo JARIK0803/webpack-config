@@ -1,10 +1,12 @@
 {
+  "name": "webpack-starters",
+  "version": "1.0.0",
   "private": true,
+  "description": "A collection of different Webpack setups for quick referencing or starting from",
   "scripts": {
-    "start": "webpack serve",
+    "start": "cross-env SERVE=true webpack serve",
     "watch": "webpack --watch",
-    "build": "set NODE_ENV=production && webpack",
-    "build-linux": "export NODE_ENV=production && webpack",
+    "build": "cross-env NODE_ENV=production webpack --mode=production",
     "build-dev": "webpack",
     "clean": "rm -rf dist"
   },
@@ -16,6 +18,7 @@
     "@svgr/webpack": "^6.2.1",
     "babel-loader": "^8.2.5",
     "clean-webpack-plugin": "^4.0.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.6.0",

@@ -15,9 +15,11 @@ const plugins = [
   }),
 ];
 
-if (process.env.NODE_ENV?.trim() === 'production') {
+if (process.env.NODE_ENV === 'production') {
   mode = 'production';
-} else {
+} 
+
+if (process.env.SERVE) {
   plugins.push(new ReactRefreshWebpackPlugin())
 }
 

@@ -1,6 +1,6 @@
 const plugins = [];
 
-if (process.env.NODE_ENV?.trim() !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
   plugins.push('react-refresh/babel');
 }
 
