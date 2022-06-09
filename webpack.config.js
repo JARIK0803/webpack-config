@@ -3,6 +3,7 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 let mode = 'development';
 
@@ -11,17 +12,25 @@ const plugins = [
   new MiniCssExtractPlugin(), //new MiniCssExtractPlugin({filename: './css/main.css'})
   new HtmlWebpackPlugin({
     template: './src/index.html',
-    favicon: './src/favicon/favicon.ico',
+    // favicon: './src/favicon/favicon.ico',
     // inject: 'body',
+  }),
+  new CopyWebpackPlugin({
+    patterns: [
+      {
+        from: path.resolve(__dirname, 'src/favicon'),
+        to: path.resolve(__dirname, 'dist/favicon'),
+      },
+    ],
   }),
 ];
 
 if (process.env.NODE_ENV === 'production') {
   mode = 'production';
-} 
+}
 
 if (process.env.SERVE) {
-  plugins.push(new ReactRefreshWebpackPlugin())
+  plugins.push(new ReactRefreshWebpackPlugin());
 }
 
 module.exports = {
