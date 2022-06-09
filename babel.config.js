@@ -1,6 +1,6 @@
 // Cannot load "react-refresh/babel" in production
 const plugins = [];
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.SERVE) {
   plugins.push('react-refresh/babel');
 }
 
