@@ -9,16 +9,16 @@ let mode = 'development';
 
 const plugins = [
   new CleanWebpackPlugin(),
-  new MiniCssExtractPlugin(), //new MiniCssExtractPlugin({filename: './css/main.css'})
+  new MiniCssExtractPlugin({ filename: './static/css/main.css' }),
   new HtmlWebpackPlugin({
-    template: './src/index.html',
+    template: './public/index.html',
     // favicon: './src/favicon/favicon.ico',
     // inject: 'body',
   }),
   new CopyWebpackPlugin({
     patterns: [
       {
-        from: path.resolve(__dirname, 'src/favicon'),
+        from: path.resolve(__dirname, 'public/favicon'),
         to: path.resolve(__dirname, 'dist/favicon'),
       },
     ],
@@ -40,10 +40,11 @@ module.exports = {
   entry: './src/index.js',
 
   output: {
+    filename: './static/js/[name].bundle.js',
     // output path is required for `clean-webpack-plugin`
     path: path.resolve(__dirname, 'dist'),
     // this places all images processed in an image folder
-    assetModuleFilename: 'images/[hash][ext][query]',
+    assetModuleFilename: './static/media/[hash][ext][query]',
   },
 
   module: {
@@ -87,7 +88,10 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             // This is required for asset imports in CSS, such as url()
-            options: { publicPath: '' },
+            options: { publicPath: '../../' },
+            // publicPath is the relative path of the resource to the context
+            // e.g. for ./css/admin/main.css the publicPath will be ../../
+            // while for ./css/main.css the publicPath will be ../
           },
           'css-loader',
           'postcss-loader',

@@ -1,9 +1,9 @@
 import '../styles/index.scss';
 import Recipes from './Recipes';
 import Whatever from './Whatever';
-import sword from '../images/swc-sword.png';
-import swordSvg from '../images/sword.svg?url';
-import SwordSvg from '../images/sword.svg';
+import sword from '../assets/images/swc-sword.png';
+import swordSvg from '../assets/images/sword.svg?url';
+import SwordSvg from '../assets/images/sword.svg';
 
 // import React from 'react';
 
