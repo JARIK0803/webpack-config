@@ -1,5 +1,6 @@
 // @refresh reset
 //this pragma for forcibly refresh with React Fast Refresh  this component
+import React from "react";
 import { useState } from 'react';
 
 const elvenShieldRecipe = {
@@ -29,7 +30,7 @@ const Recipes = () => {
       <ul>
         {Object.keys(recipe).map(material => (
           <li key={material}>
-            {material}: {recipe[material]}
+            {/* {material}: {recipe[material]} */}
           </li>
         ))}
       </ul>

@@ -37,7 +37,7 @@ module.exports = {
   // mode defaults to 'production' if not set
   mode: mode,
 
-  entry: './src/index.js',
+  entry: './src/index.tsx',
 
   output: {
     filename: './static/js/[name].bundle.js',
@@ -101,21 +101,9 @@ module.exports = {
         ],
       },
       {
-        test: /\.jsx?$/,
+        test: /\.tsx?$/,
+        use: 'ts-loader',
         exclude: /node_modules/,
-        use: {
-          // without additional settings, this will reference .babelrc
-          loader: 'babel-loader',
-          options: {
-            /**
-             * From the docs: When set, the given directory will be used
-             * to cache the results of the loader. Future webpack builds
-             * will attempt to read from the cache to avoid needing to run
-             * the potentially expensive Babel recompilation process on each run.
-             */
-            cacheDirectory: true,
-          },
-        },
       },
     ],
   },
@@ -125,7 +113,7 @@ module.exports = {
   devtool: 'source-map',
 
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.tsx', '.ts', '.js'],
   },
 
   devServer: {
